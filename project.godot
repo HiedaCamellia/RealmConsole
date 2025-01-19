@@ -14,9 +14,30 @@ config/name="RealmConsole"
 run/main_scene="res://src/Main.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 
+[autoload]
+
+RealmConsole="*res://addons/realm_console/RealmConsole.cs"
+
 [dotnet]
 
 project/assembly_name="RealmConsole"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/realm_console/plugin.cfg")
+
+[input]
+
+realm_console_toggle={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":96,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+realm_console_hide={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 
 [rendering]
 

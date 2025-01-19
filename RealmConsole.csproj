@@ -40,7 +40,12 @@
     <!-- LightMoq is a Chickensoft package which makes it more like Moq. -->
     <PackageReference Include="LightMoq" Version="0.1.0" />
   </ItemGroup>
-  <ItemGroup>
-    <!-- Production dependencies go here! -->
+  <ItemGroup><!-- Production dependencies go here! -->
+  
+    <Content Include="addons\realm_console\font\JetBrainsMonoNL-Regular.ttf" />
+    <Content Include="addons\realm_console\font\JetBrainsMonoNL-Regular.ttf.import" />
+    <Content Include="docs\README.md\0.png" />
+    <Content Include="docs\README.md\1.png" />
+    <Content Include="docs\README.md\2.png" />
   </ItemGroup>
 </Project>
