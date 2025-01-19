@@ -16,13 +16,13 @@ RealmConsole is a Godot 4 editor plugin. It provides an in-game console that all
 
 此仓库是一个示例游戏（大概可以称为“游戏”吧）
 * 在Godot编辑器中运行此游戏
-![0.png](docs/README.md/0.png)
+![0.png](docs/README_md/0.png)
 * 按下`` ` ``键呼出控制台
-![1.png](docs/README.md/1.png)
+![1.png](docs/README_md/1.png)
 * 在`_process`的方法体中添加语句`Vars["Game"].Coin += 1`，并按下“执行”按钮
-![2.png](docs/README.md/2.png)
+![2.png](docs/README_md/2.png)
 * 可观察到脚本运行效果：“当前资源”数字在不断增加
-![0.gif](docs/README.md/0.gif)
+![0.gif](docs/README_md/0.gif)
 
 ## 💁 获取帮助
 

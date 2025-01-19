@@ -44,8 +44,11 @@
   
     <Content Include="addons\realm_console\font\JetBrainsMonoNL-Regular.ttf" />
     <Content Include="addons\realm_console\font\JetBrainsMonoNL-Regular.ttf.import" />
-    <Content Include="docs\README.md\0.png" />
-    <Content Include="docs\README.md\1.png" />
-    <Content Include="docs\README.md\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="docs\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="docs\**" />
   </ItemGroup>
 </Project>
