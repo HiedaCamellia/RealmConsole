@@ -1,8 +1,6 @@
 extends Node
 
-var Vars = {}
-
-func mount(code: String) -> void:
+func mount(code: String, vars = {}):
 	var script := GDScript.new()
 	script.source_code = code
 
@@ -10,8 +8,15 @@ func mount(code: String) -> void:
 		var obj = script.new()
 
 		if obj is Node:
-			obj.Vars = Vars
+			obj.Vars = vars
 			add_child(obj)
+			return obj
 			
 		else:
-			printerr("Error: Script is not a Node.")
+			return "Error: Script is not a Node."
+			
+	return "Error: Script reload fail."
+			
+	
+func unmount(obj: Node):
+	obj.queue_free()

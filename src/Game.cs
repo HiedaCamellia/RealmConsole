@@ -12,7 +12,7 @@ public partial class Game : Control
 
     public override void _Ready()
     {
-        RealmConsole.Default.HostVars.Add("Game", this);
+        RealmConsole.Default.HostVars["Game"] = this;
 
         _button0 = GetNode<Button>("%Button0");
         _text = GetNode<RichTextLabel>("%Text");

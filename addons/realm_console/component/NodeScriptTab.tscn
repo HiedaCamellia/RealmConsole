@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3fdtvgvx48lt"]
+
+[ext_resource type="FontFile" uid="uid://cq4vklyt5vx8h" path="res://addons/realm_console/font/JetBrainsMonoNL-Regular.ttf" id="1_156us"]
+[ext_resource type="FontFile" uid="uid://cqfmc42vlh3kr" path="res://addons/realm_console/font/fontawesome-free-6.7.2-desktop/otfs/Font Awesome 6 Free-Solid-900.otf" id="1_op2f3"]
+[ext_resource type="Script" path="res://addons/realm_console/component/NodeScriptTab.cs" id="1_x2jho"]
+[ext_resource type="Script" path="res://addons/realm_console/component/OutputText.cs" id="4_ygehq"]
+
+[sub_resource type="FontVariation" id="FontVariation_r2o7h"]
+base_font = ExtResource("1_156us")
+
+[node name="NodeScriptTab" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x2jho")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="RunButton" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.372549, 0.678431, 0.396078, 1)
+theme_override_fonts/font = ExtResource("1_op2f3")
+theme_override_font_sizes/font_size = 24
+text = ""
+
+[node name="PauseButton" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.807843, 0.815686, 0.839216, 1)
+theme_override_fonts/font = ExtResource("1_op2f3")
+theme_override_font_sizes/font_size = 24
+disabled = true
+text = ""
+
+[node name="StopButton" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.788235, 0.309804, 0.309804, 1)
+theme_override_fonts/font = ExtResource("1_op2f3")
+theme_override_font_sizes/font_size = 24
+disabled = true
+text = ""
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+color = Color(1, 0, 0, 1)
+
+[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 250
+
+[node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/VSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_156us")
+text = "extends \"res://addons/realm_console/realm_script.gd\"
+
+func _enter_tree() -> void:
+	Vars[\"Output\"].Clear()
+	Vars[\"Output\"].PrintSuccess(\"Hello RealmConsole!\")
+	pass
+
+
+func _process(delta: float) -> void:
+	Vars[\"Game\"].Coin += 1
+	pass
+"
+caret_blink = true
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_control_chars = true
+draw_tabs = true
+draw_spaces = true
+gutters_draw_line_numbers = true
+code_completion_enabled = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="OuputText" type="RichTextLabel" parent="VBoxContainer/VSplitContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/normal_font = SubResource("FontVariation_r2o7h")
+bbcode_enabled = true
+text = "[img]res://logo.png[/img]
+"
+script = ExtResource("4_ygehq")

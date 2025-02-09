@@ -2,6 +2,7 @@ namespace RealmConsole;
 
 using Godot;
 using System;
+using System.Collections.Generic;
 using Godot.Collections;
 
 public partial class RealmConsole : CanvasLayer
@@ -10,13 +11,13 @@ public partial class RealmConsole : CanvasLayer
 
     public Node Host { get; set; } = default!;
 
-    public Dictionary HostVars => (Dictionary)Host.Get("Vars");
+    public Dictionary HostVars { get; } = new Dictionary();
 
-    private ACertainDataClass Data { get; set; } = new ACertainDataClass();
+    private TabBar _tabBar = default!;
+    private Button _addButton = default!;
+    private PanelContainer _scriptTabContainer = default!;
 
-    private RichTextLabel _outputTextBox;
-    private CodeEdit _codeEdit;
-    private Button _exeButton;
+    private List<NodeScriptTab> _nodeScriptTabs = [];
 
     public RealmConsole()
     {
@@ -39,26 +40,56 @@ public partial class RealmConsole : CanvasLayer
         var console = GD.Load<PackedScene>("res://addons/realm_console/RealmConsole.tscn").Instantiate();
         AddChild(console);
 
-        _outputTextBox = console.GetNode<RichTextLabel>("%OutputTextBox");
-        _codeEdit = console.GetNode<CodeEdit>("%CodeEdit");
-        _exeButton = console.GetNode<Button>("%ExeButton");
+        _tabBar = console.GetNode<TabBar>("%TabBar");
+        _addButton = console.GetNode<Button>("%AddButton");
+        _scriptTabContainer = console.GetNode<PanelContainer>("%ScriptTabContainer");
 
-        _exeButton.Pressed += () =>
+        _tabBar.TabChanged += TabChanged;
+        _addButton.Pressed += AddTab;
+        _tabBar.TabClosePressed += CloseTab;
+    }
+
+    private void CloseTab(long tab)
+    {
+        int t = (int)tab;
+        if(t >= 0 && t < _nodeScriptTabs.Count)
         {
-            Host.Call("mount", _codeEdit.Text);
-            Data.GammaInt++;
-        };
+            var nodeScriptTab = _nodeScriptTabs[t];
+            nodeScriptTab.Stop();
+            nodeScriptTab.QueueFree();
+            _nodeScriptTabs.RemoveAt(t);
+            _tabBar.RemoveTab(t);
+        }
+    }
+
+    private void TabChanged(long tab)
+    {
+        int t = (int)tab;
+        _nodeScriptTabs.ForEach((tab) => tab.Visible = false);
+        if(t >= 0 && t < _nodeScriptTabs.Count)
+        {
+            _nodeScriptTabs[t].Visible = true;
+        }
+    }
+
+    private void AddTab()
+    {
+        var tab = GD.Load<PackedScene>("res://addons/realm_console/component/NodeScriptTab.tscn")
+            .Instantiate<NodeScriptTab>();
+        tab.RealmConsole = this;
+        _scriptTabContainer.AddChild(tab);
+
+        _nodeScriptTabs.Add(tab);
+
+        _tabBar.AddTab($"Script {_nodeScriptTabs.Count}");
+        _tabBar.CurrentTab = _nodeScriptTabs.Count - 1;
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("realm_console_toggle") && !_codeEdit.HasFocus())
+        if (@event.IsActionPressed("realm_console_toggle") && !Visible)
         {
-            Visible = !Visible;
-            if (Visible)
-            {
-                Callable.From(() => _codeEdit.GrabFocus()).CallDeferred();
-            }
+            Visible = true;
 
         }
         else if (@event.IsActionPressed("realm_console_hide") && Visible)
