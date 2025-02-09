@@ -14,6 +14,8 @@ RealmConsole is a Godot 4 editor plugin. It provides an in-game console that all
 
 ## 🥚 快速开始
 
+> **⚠** 已过时，待更新
+
 此仓库是一个示例游戏（大概可以称为“游戏”吧）
 * 在Godot编辑器中运行此游戏
 ![0.png](docs/README_md/0.png)
